@@ -97,7 +97,7 @@ def find_leading_coefficient_row (matrix: list[list[float]], placed_rows: list[i
     """
     Given a list of list of floats matrix, find the index of the first row
     not in placed_rows with a non-zero coefficient in column column. Return -1
-    if there is no coefficient in that column.
+    if there is no coefficient in that column. 
 
     Precondition: 0 <= column <= len(matrix)
     >>> matrix = [[0, 0, 2], [0, 10, 0], [1, 0, 0]]
