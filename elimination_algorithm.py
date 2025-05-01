@@ -67,7 +67,7 @@ def scale_and_add_row (i: list[float], j: list[float], scalar: float) -> None:
     scale_row(i, scalar)
     for entry in range(len(j)):
         j[entry] += i[entry]
-        if j[entry] == 0:
+        if j[entry] == 0: # handles case of -0.0 in Python
             j[entry] = abs(j[entry])
     scale_row(i, (1/scalar))
 
