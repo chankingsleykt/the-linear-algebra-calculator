@@ -1,3 +1,9 @@
+from decimal import *
+
+# def display(num: Decimal) -> float:
+    
+    
+    
 def scale_row (i: list[float], scalar: float) -> None:
     """
     Given a row i in a matrix, scale each entry by scalar.
@@ -24,7 +30,9 @@ def scale_row (i: list[float], scalar: float) -> None:
     """
 
     for entry in range(len(i)):
+        # i[entry] = Decimal(i[entry])
         i[entry]*=scalar
+       # i[entry] = round(i[entry], 6)
 
 
 def scale_and_add_row (i: list[float], j: list[float], scalar: float) -> None:
@@ -93,7 +101,7 @@ def switch_row (matrix: list[list[float]], i: int, j: int) -> None:
     matrix[j] = c
 
 
-def find_leading_coefficient_row (matrix: list[list[float]], placed_rows: list[int], column: int) -> None:
+def find_leading_coefficient_row (matrix: list[list[float]], placed_rows: list[int], column: int) -> int:
     """
     Given a list of list of floats matrix, find the index of the first row
     not in placed_rows with a non-zero coefficient in column column. Return -1
@@ -117,16 +125,24 @@ def find_leading_coefficient_row (matrix: list[list[float]], placed_rows: list[i
     3
     """
 
-    index = -1
-    row = 0
-    while index == -1 and row < len(matrix):
-        if row not in placed_rows and matrix[row][column] != 0:
-            index = row
-        row +=1
-    return index
+    starting_row = 0
+    
+    # start at the first row not placed
+    if placed_rows != []:
+        starting_row = placed_rows[-1]+1
+        # print(row)
+        
+    # iterate through matrix along the column till we find a non-zero entry
+    for row in range(starting_row, len(matrix)):
+        if matrix[row][column] != 0:
+            # print("row: ", row, ", column: ", column, ", value: ", matrix[row][column])
+            return row
+        # row +=1
+    return -1
+    
 
 
-def elimination (matrix: list[list[float]]) -> None:
+def elimination (matrix: list[list[Decimal]]) -> None:
     """Given a matrix, run the elimination algorithm on it and reduce it to
     row-reduced echelon form.
 
@@ -148,10 +164,14 @@ def elimination (matrix: list[list[float]]) -> None:
         # find row with non-zero coefficient
         row_with_leading_coefficient = find_leading_coefficient_row(matrix, placed_rows, row)
 
-        # if there's a non-zero coefficient, switch rows with the current one
+        # if there's a non-zero coefficient, continue
         if row_with_leading_coefficient != -1:
-            # print('rows to switch: ', row, ' and ', row_with_leading_coefficient)
-            switch_row(matrix, row, row_with_leading_coefficient)
+            
+            # if non-zero coefficient is not the current row, switch
+            if row_with_leading_coefficient != row:
+                if __name__ == '__main__':
+                    print('rows to switch: ', row, ' and ', row_with_leading_coefficient)
+                switch_row(matrix, row, row_with_leading_coefficient)
 
             # turn non-zero coefficient into leading one
             leading_coefficient = matrix[row][row]

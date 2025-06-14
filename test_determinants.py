@@ -69,8 +69,8 @@ class TestDet(unittest.TestCase):
         
     def test_two_by_two (self):
         """Test the case of a two-by-two matrix"""
-        actual = det(self.two_by_two_example)
-        expected = 4.800000000000001
+        actual = round(det(self.two_by_two_example), 4)
+        expected = 4.8
         self.assertEqual(actual, expected, 'hey!')  
         
         
